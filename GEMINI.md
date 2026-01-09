@@ -6,9 +6,9 @@ The project uses the RingCentral Python SDK and relies on environment variables 
 
 ## Key Files
 
-*   `fetch_call_logs_by_date.py`: This script fetches and displays detailed call logs from the last 30 days, including information about call legs and recordings.
-*   `delete_call_logs_by_date.py`: This script deletes call logs based on specified criteria.
-*   `delete_recent_call_logs.py`: This script deletes call logs from the last 30 days.
+*   `fetch_call_logs_by_date.py`: This script fetches and displays detailed call logs from the last 30 days, including information about call legs and recordings. **Note: This script is configured to only retrieve call logs that have associated recordings.**
+*   `delete_call_logs_by_date.py`: This script deletes call logs based on specified criteria. **Note: This script is configured to only delete call logs that have associated recordings.**
+*   `delete_recent_call_logs.py`: This script deletes call logs from the last 30 days. **Note: This script is configured to only delete call logs that have associated recordings.**
 
 ## Building and Running
 

@@ -10,9 +10,9 @@ This repository contains a set of Python scripts designed for interacting with t
 
 ## Key Files and Their Functions
 
-*   `fetch_call_logs_by_date.py`: Fetches and displays detailed call logs from your RingCentral account. By default, it retrieves logs from the last 30 days, but you can specify custom date ranges.
-*   `delete_call_logs_by_date.py`: Deletes call logs that match an optional date range.
-*   `delete_recent_call_logs.py`: Conveniently deletes all call logs from the last 30 days.
+*   `fetch_call_logs_by_date.py`: Fetches and displays detailed call logs from your RingCentral account. By default, it retrieves logs from the last 30 days, but you can specify custom date ranges. **Note: This script is configured to only retrieve call logs that have associated recordings.**
+*   `delete_call_logs_by_date.py`: Deletes call logs that match an optional date range. **Note: This script is configured to only delete call logs that have associated recordings.**
+*   `delete_recent_call_logs.py`: Conveniently deletes all call logs from the last 30 days. **Note: This script is configured to only delete call logs that have associated recordings.**
 
 ## Getting Started
 
