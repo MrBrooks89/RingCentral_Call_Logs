@@ -6,8 +6,9 @@ The project uses the RingCentral Python SDK and relies on environment variables 
 
 ## Key Files
 
-*   `call_logs.py`: This script fetches and displays detailed call logs from the last 30 days, including information about call legs and recordings.
-*   `call_logs_delete.py`: This script deletes call logs based on specified criteria.
+*   `fetch_call_logs_by_date.py`: This script fetches and displays detailed call logs from the last 30 days, including information about call legs and recordings.
+*   `delete_call_logs_by_date.py`: This script deletes call logs based on specified criteria.
+*   `delete_recent_call_logs.py`: This script deletes call logs from the last 30 days.
 
 ## Building and Running
 
@@ -31,7 +32,7 @@ The following environment variables must be set to authenticate with the RingCen
 *   **To fetch call logs:**
 
     ```bash
-    python call_logs.py [--date_from YYYY-MM-DDTHH:MM:SS.sssZ] [--date_to YYYY-MM-DDTHH:MM:SS.sssZ]
+    python fetch_call_logs_by_date.py [--date_from YYYY-MM-DDTHH:MM:SS.sssZ] [--date_to YYYY-MM-DDTHH:MM:SS.sssZ]
     ```
 
     *   `--date_from`: The start date for the call logs in ISO 8601 format. Defaults to 30 days ago.
@@ -40,18 +41,24 @@ The following environment variables must be set to authenticate with the RingCen
 *   **To delete call logs:**
 
     ```bash
-    python call_logs_delete.py --phone_number PHONE_NUMBER [--date_from YYYY-MM-DDTHH:MM:SS.sssZ] [--date_to YYYY-MM-DDTHH:MM:SS.sssZ]
+    python delete_call_logs_by_date.py --phone_number PHONE_NUMBER [--date_from YYYY-MM-DDTHH:MM:SS.sssZ] [--date_to YYYY-MM-DDTHH:MM:SS.sssZ]
     ```
 
     *   `--phone_number`: The phone number to filter call logs for (required).
     *   `--date_from`: The start date for the call logs in ISO 8601 format. Defaults to 24 hours ago.
     *   `--date_to`: The end date for the call logs in ISO 8601 format. Defaults to the current time.
 
+*   **To delete recent call logs (last 30 days):**
+
+    ```bash
+    python delete_recent_call_logs.py
+    ```
+
 ## Development Conventions
 
 *   The project uses standard Python conventions.
 *   Sensitive information, such as API credentials, is managed through environment variables and should not be hard-coded in the source files.
-*   The `call_logs.py` and `call_logs_delete.py` script includes a basic rate limiter to avoid exceeding the RingCentral API's request limits.
+*   The `fetch_call_logs_by_date.py` and `delete_call_logs_by_date.py` script includes a basic rate limiter to avoid exceeding the RingCentral API's request limits.
 
 ## References
 
