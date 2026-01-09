@@ -21,14 +21,8 @@ except Exception as e:
     sys.exit("Unable to authenticate to platform: " + str(e))
 
 # ---------------------- ARGPARSE ----------------------
-parser = argparse.ArgumentParser(description="Delete RingCentral call logs.")
-parser.add_argument(
-    "--date_from",
-    help="Start date for call logs (ISO 8601 format) Ex: 2025-11-01T00:00:00.000Z",
-)
-parser.add_argument(
-    "--date_to",
-    help="End date for call logs (ISO 8601 format) Ex: 2025-11-30T23:59:59.999Z",
+parser = argparse.ArgumentParser(
+    description="Delete RingCentral call logs older than 30 days."
 )
 # parser.add_argument(
 #     "--phone_number",
@@ -38,16 +32,15 @@ parser.add_argument(
 args = parser.parse_args()
 
 # ---------------------- DATE RANGE ----------------------
+# We want to delete call logs older than 30 days.
+# So we set the date_to to 30 days ago.
+# date_from is omitted to get everything up to date_to.
 now_utc = datetime.now(timezone.utc)
-date_to_default = now_utc.isoformat(timespec="milliseconds").replace("+00:00", "Z")
-date_from_default = (
-    (now_utc - timedelta(days=1))
+date_to = (
+    (now_utc - timedelta(days=30))
     .isoformat(timespec="milliseconds")
     .replace("+00:00", "Z")
 )
-
-date_from = args.date_from if args.date_from else date_from_default
-date_to = args.date_to if args.date_to else date_to_default
 
 
 # ---------------------- HELPERS ----------------------
@@ -258,29 +251,96 @@ def log_deleted_record(record, log_file):
 
 
 # ---------------------- FETCH CALL LOG ----------------------
-# We fetch the call log to get the ID of the record to delete.
-# The filters should be as specific as possible to narrow down the records.
-params = {
-    "view": "Simple",
-    # "phoneNumber": args.phone_number,
-    "dateFrom": date_from,
-    "dateTo": date_to,
-    "recordingType": "All",
-    "perPage": 100,
-    "page": 1,
-}
+
+
+all_records = []
+
+
+page = 1
+
 
 try:
-    resp = _platform_get_with_throttle("/restapi/v1.0/account/~/call-log", params)
-    records = resp.json().records
+
+
+    while True:
+
+
+        params = {
+
+
+            "view": "Simple",
+
+
+            "dateFrom": "2025-10-13T00:00:00.000Z", # Explicitly set start date as requested
+
+
+            "dateTo": date_to,
+
+
+            "recordingType": "All",
+
+
+            "perPage": 250,
+
+
+            "page": page,
+
+
+        }
+
+
+        print(f"Fetching page {page} with dateFrom={params['dateFrom']} and dateTo={params['dateTo']}...")
+
+
+        
+
+
+        api_response = _platform_get_with_throttle(
+
+
+            "/restapi/v1.0/account/~/call-log", params
+
+
+        )
+
+
+        json_response = api_response.json()
+
+
+
+
+
+        # If the records list is empty, we've reached the end
+
+
+        if not json_response.records:
+
+
+            print("Found no more records. Concluding fetch.")
+
+
+            break
+
+
+
+
+
+        all_records.extend(json_response.records)
+
+
+        page += 1
+
+
 except Exception as e:
-    sys.exit(f"Error fetching call logs: {e}")
+
+
+    sys.exit(f"An error occurred during call log fetching: {e}")
+
+records = all_records  # Use the comprehensive list for deletion
+
 
 if not records:
-    print(
-        f"No call logs found for the specified phone number ({params['phoneNumber']}) "
-        f"between {date_from} and {date_to}."
-    )
+    print(f"No call logs found older than {date_to}.")
     sys.exit(0)
 
 # ---------------------- DELETE CALL LOG ----------------------
@@ -345,10 +405,14 @@ with open(LOG_FILE_NAME, "a") as log_file:
         )
         _print_recording(recording)
 
+        if not recording:
+            print(f"Skipping call log {call_log_id} (no recording found).")
+            print("-----------------------------------\n")
+            continue  # Move to the next record
+
         print("-----------------------------------")
 
-        user_input = input(f"Are you sure you want to delete this call log? (yes/no): ")
-        if user_input.lower() == "yes":
+        if True:
             try:
                 endpoint = f"/restapi/v1.0/account/~/call-log/{call_log_id}"
                 resp = _platform_delete_with_throttle(endpoint)
@@ -361,8 +425,7 @@ with open(LOG_FILE_NAME, "a") as log_file:
                     )
             except Exception as e:
                 print(f"An error occurred while deleting call log {call_log_id}: {e}")
-        else:
-            print(f"Skipping deletion of call log with ID: {call_log_id}")
+
 
         print("\n")
 
