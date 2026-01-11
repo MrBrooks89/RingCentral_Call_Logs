@@ -112,7 +112,7 @@ python delete_call_logs_by_date.py --date_from 2023-11-01T00:00:00.000Z --date_t
 
 #### Deleting Recent Call Logs
 
-To delete all call logs from the last 30 days, use `delete_recent_call_logs.py`:
+To delete all call logs older then the last 30 days, use `delete_recent_call_logs.py`:
 
 ```bash
 python delete_recent_call_logs.py
@@ -122,7 +122,7 @@ python delete_recent_call_logs.py
 
 *   **Python Standards**: Adheres to standard Python coding conventions.
 *   **Environment Variables**: Sensitive information (API credentials) is managed via environment variables and should never be hard-coded.
-*   **Rate Limiting**: `fetch_call_logs_by_date.py` and `delete_call_logs_by_date.py` include basic rate limiting to prevent exceeding RingCentral API request limits.
+*   **Rate Limiting**: `fetch_call_logs_by_date.py`,`delete_call_logs_by_date.py` and `delete_recent_call_logs.py` include basic rate limiting to prevent exceeding RingCentral API request limits.
 
 ## References
 
