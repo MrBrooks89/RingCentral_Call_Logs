@@ -28,12 +28,46 @@ Ensure you have the following installed:
 
 ### Configuration
 
-To authenticate with the RingCentral API, you must set the following environment variables. It's recommended to add these to your `.bashrc`, `.zshrc`, or equivalent shell configuration file, or set them before running the scripts.
+There are two ways to configure your API credentials. Using a `.env` file is recommended for its flexibility, especially for automated scripts and cron jobs.
+
+#### Method 1: Using a `.env` File (Recommended)
+
+This method uses a `.env` file to store your credentials, which the scripts will load automatically. This is the most reliable method for running the scripts in different environments, including cron.
+
+1.  **Install `python-dotenv`**:
+    If you haven't already, install the necessary package:
+    ```bash
+    pip install python-dotenv
+    ```
+
+2.  **Create a `.env` file**:
+    In the root of the project directory, create a file named `.env`.
+
+3.  **Add your credentials**:
+    Add the following content to the `.env` file, replacing the placeholder values with your actual RingCentral credentials.
+    ```
+    RC_CLIENT_ID="YOUR_CLIENT_ID"
+    RC_CLIENT_SECRET="YOUR_CLIENT_SECRET"
+    RC_JWT_TOKEN="YOUR_JWT_TOKEN"
+    RC_SERVER="https://platform.ringcentral.com"
+    ```
+
+4.  **Secure your file**:
+    To protect your credentials, set the file permissions so that only your user can read it:
+    ```bash
+    chmod 600 .env
+    ```
+
+#### Method 2: Using Shell Environment Variables
+
+You can also export the variables directly into your shell. This method works well for interactive sessions.
+
+Set the following environment variables in your `.bashrc`, `.zshrc`, or equivalent shell configuration file.
 
 *   `RC_CLIENT_ID`: Your RingCentral application client ID.
 *   `RC_CLIENT_SECRET`: Your RingCentral application client secret.
 *   `RC_JWT_TOKEN`: Your RingCentral JWT (JSON Web Token) for authentication.
-*   `RC_SERVER`: The RingCentral API server URL (e.g., `https://platform.ringcentral.com` for production or `https://platform.devtest.ringcentral.com` for sandbox).
+*   `RC_SERVER`: The RingCentral API server URL (e.g., `https://platform.ringcentral.com`).
 
 ### Running the Scripts
 
