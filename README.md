@@ -11,6 +11,7 @@ This repository contains a set of Python scripts designed for interacting with t
 ## Key Files and Their Functions
 
 *   `fetch_call_logs_by_date.py`: Fetches and displays detailed call logs from your RingCentral account. By default, it retrieves logs from the last 30 days, but you can specify custom date ranges. **Note: This script is configured to only retrieve call logs that have associated recordings.**
+*   `search_call_logs_by_phone.py`: Fetches and displays call logs filtered by a specific phone number and date range. This script does NOT include call recordings.
 *   `delete_call_logs_by_date.py`: Deletes call logs that match an optional date range. **Note: This script is configured to only delete call logs that have associated recordings.**
 *   `delete_recent_call_logs.py`: Conveniently deletes all call logs from the last 30 days. **Note: This script is configured to only delete call logs that have associated recordings.**
 
@@ -89,6 +90,23 @@ python fetch_call_logs_by_date.py [--date_from YYYY-MM-DDTHH:MM:SS.sssZ] [--date
 python fetch_call_logs_by_date.py --date_from 2023-10-01T00:00:00.000Z --date_to 2023-10-31T23:59:59.999Z
 ```
 
+#### Searching Call Logs by Phone Number
+
+To search for call logs related to a specific phone number, use `search_call_logs_by_phone.py`:
+
+```bash
+python search_call_logs_by_phone.py --phone_number PHONE_NUMBER [--date_from YYYY-MM-DDTHH:MM:SS.sssZ] [--date_to YYYY-MM-DDTHH:MM:SS.sssZ]
+```
+
+*   `--phone_number`: The phone number to filter call logs for (required).
+*   `--date_from`: (Optional) The start date for the call logs in ISO 8601 format. Defaults to 30 days ago.
+*   `--date_to`: (Optional) The end date for the call logs in ISO 8601 format. Defaults to the current time.
+
+**Example: Searching logs for a specific phone number**
+```bash
+python search_call_logs_by_phone.py --phone_number "+16505550100" --date_from 2023-10-01T00:00:00.000Z
+```
+
 #### Deleting Call Logs by Date Range
 
 To delete specific call logs, use `delete_call_logs_by_date.py`:
@@ -122,7 +140,7 @@ python delete_recent_call_logs.py
 
 *   **Python Standards**: Adheres to standard Python coding conventions.
 *   **Environment Variables**: Sensitive information (API credentials) is managed via environment variables and should never be hard-coded.
-*   **Rate Limiting**: `fetch_call_logs_by_date.py`,`delete_call_logs_by_date.py` and `delete_recent_call_logs.py` include basic rate limiting to prevent exceeding RingCentral API request limits.
+*   **Rate Limiting**: `fetch_call_logs_by_date.py`, `search_call_logs_by_phone.py`, `delete_call_logs_by_date.py` and `delete_recent_call_logs.py` include basic rate limiting to prevent exceeding RingCentral API request limits.
 
 ## References
 
