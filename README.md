@@ -95,16 +95,22 @@ python fetch_call_logs_by_date.py --date_from 2023-10-01T00:00:00.000Z --date_to
 To search for call logs related to a specific phone number, use `search_call_logs_by_phone.py`:
 
 ```bash
-python search_call_logs_by_phone.py --phone_number PHONE_NUMBER [--date_from YYYY-MM-DDTHH:MM:SS.sssZ] [--date_to YYYY-MM-DDTHH:MM:SS.sssZ]
+python search_call_logs_by_phone.py --phone_number PHONE_NUMBER [--date_from YYYY-MM-DDTHH:MM:SS.sssZ] [--date_to YYYY-MM-DDTHH:MM:SS.sssZ] [--view {Simple,Detailed}]
 ```
 
 *   `--phone_number`: The phone number to filter call logs for (required).
 *   `--date_from`: (Optional) The start date for the call logs in ISO 8601 format. Defaults to 30 days ago.
 *   `--date_to`: (Optional) The end date for the call logs in ISO 8601 format. Defaults to the current time.
+*   `--view`: (Optional) The level of detail for the call log records. Can be `Simple` or `Detailed`. Defaults to `Simple`.
 
-**Example: Searching logs for a specific phone number**
+**Example: Searching logs for a specific phone number with default (Simple) view**
 ```bash
 python search_call_logs_by_phone.py --phone_number "+16505550100" --date_from 2023-10-01T00:00:00.000Z
+```
+
+**Example: Searching logs for a specific phone number with Detailed view**
+```bash
+python search_call_logs_by_phone.py --phone_number "+16505550100" --view Detailed
 ```
 
 #### Deleting Call Logs by Date Range
