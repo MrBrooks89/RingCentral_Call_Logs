@@ -1,4 +1,4 @@
-*Disclaimer: This project was made with the assitance of Gemini*
+_Disclaimer: This project was made with the assitance of Gemini_
 
 # RingCentral Call Logs Management
 
