@@ -1,3 +1,5 @@
+*Disclaimer: This project was made with the assitance of Gemini*
+
 # RingCentral Call Logs Management
 
 This repository contains a set of Python scripts designed for interacting with the RingCentral API to manage call logs. It provides functionalities to fetch and delete call logs, enabling programmatic control over your RingCentral call history.
