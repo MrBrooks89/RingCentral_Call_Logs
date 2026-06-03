@@ -1,15 +1,14 @@
 from dotenv import load_dotenv
 
-from dotenv import load_dotenv
-
 load_dotenv()
+import argparse
 import os
 import time
 import zoneinfo
-import argparse
 from collections import deque
-from urllib.parse import urlparse
 from datetime import datetime, timedelta, timezone
+from urllib.parse import urlparse
+
 from ringcentral import SDK
 
 # ---------------------- ENV VARS ----------------------
